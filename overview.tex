@@ -50,7 +50,7 @@
 \begin{document}
 %
 % --- Author Metadata here ---
-\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
+%\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
 %\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
 %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
@@ -115,7 +115,7 @@ Claude Barras\\
 
 \maketitle
 \begin{abstract}
-
+Given raw TV broadcasts, each shot must be automatically tagged with the name(s) of people who can be both seen as well as heard in the shot. The list of people is not known a priori and their names must be discovered in an unsupervised way from provided text overlay or speech transcripts. The task will be evaluated on a new French corpus (provided by INA), using standard information retrieval metrics based on a posteriori collaborative annotation of the corpus.
 \end{abstract}
 
 \section{Motivation}
@@ -128,11 +128,13 @@ This task represents an extension of the (now completed) French REPERE challenge
 
 \begin{figure*}[t]
  \center 
- \includegraphics[width=1\linewidth]{figs/evidence.png}
+ \includegraphics[width=0.7\linewidth]{figs/evidence.png}
  \centering
  \caption {What is an evidence of the person identities}
  \label{fig:evidence}
 \end{figure*}
+
+\section{Goal of the task}
 
 Given raw TV broadcasts, each shot must be automatically tagged with the name(s) of people who can be both seen as well as heard in the shot. The list of people is not known a priori and their names must be discovered in an unsupervised way from provided text overlay or speech transcripts. 
 
@@ -141,7 +143,6 @@ Participants are provided with a collection of TV broadcasts pre-segmented into 
 Participants are asked to provide, for each shot, the list of names of persons speaking AND appearing at the same time. The main novelty of the task is that the list of persons is not provided a priori, and person models (neither voice nor face) may not be trained on external data. The only way to identify a person is by finding their name in the audio (e.g., using speech transcription) or visual (e.g., using optical character recognition) streams and associating them to the correct person making the task completely unsupervised. For each returned shot, participants are also asked to provide the evidence justifying their assertion (e.g. a short excerpt of the test set showing the person AND its name at the same time).
 
 
-\section{Goal of the task}
 
 The goal of the task (what the participants had to do)
 
@@ -161,12 +162,33 @@ The test set is composed of two corpora, a French TV news corpus provided by INA
 
 \section{Ground truth}
 
+Here is how the search experiment is designed. Based on participant submissions, we will select a set of queries following the form: “PersonFirstName PersonLastName” possibly restricted to a temporal interval. For each query and for each video within the chosen period, the shots for which a submitted person name is close to the query name (i.e. by applying a predefined threshold on a string distance) will be selected and ranked according to their confidence score.
+
 \subsection{Collaborative annotation}
+
+Groundtruth will be created a posteriori by manually checking the top N shots proposed by participants for each request and the associated evidence. We will kindly ask participants to contribute to the annotation via the collaborative annotation webapp developed in the framework of the CHISTERA Camomile project. Evidences provided by participants will ease and speed up the annotation process. An online adjudication interface will be opened after the first round of evaluations to solve remaining ambiguous cases.
 
 \subsection{Web interface}
 
 \section{Evaluation procedure}
 
+This procedure results in an Average Precision specific to the query and to the video. In order to prevent giving too much weight to predominant people or to individual video, we will first compute the Mean Average Precision over all videos where a particular person is detected, and then compute a Mean Mean Average Precision over all persons.
+
+Average Precision will be modified slightly to take the quality of the evidence into account. Hence, instead of a binary judgment (relevant vs. not relevant), shot relevance will be computed as follows (the value of α will be discussed during the development phase):
+
+{shot relevance} = α . {shot is relevant} + (1 - α) . {evidence is correct}
+
+
+
+\section{Baseline}
+
+\subsection{Late naming}
+
+Propagation of written names onto speaker cluster. 
+
+Propagation of speaker identities to the face with the higher probability to be the speaker
+
+\subsection{Constraint clustering}
 
 
 
