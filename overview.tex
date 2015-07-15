@@ -157,18 +157,84 @@ REPERE task
 
 The original REPERE corpus set will be used as development set. This corpus is composed of various TV shows (focusing on news, politics and people) from two French TV channels. It will be distributed by ELDA (Evaluation and Language resources Distribution Agency) freely or at distribution cost. Among those 137 hours, 50 are already manually annotated. Audio annotations are dense and provide speech transcripts and identity-labeled speech turns. Video annotations are sparse (one image every 10 seconds) and provide overlaid text transcripts and identity-labeled face segmentation. Both speech and overlaid text transcripts are tagged with named entities.
 
-The test set is composed of two corpora, a French TV news corpus provided by INA and the Catalan AGORA corpus. The INA corpus contains 115 hours of video, corresponding to 181 editions of evening broadcast news "Le 20 heures" of French public channel "France 2", from January 1st 2007 to June 30st 2007. Videos are provided as 181 MPEG1 files.
+The test set is composed of French TV news corpus provided by INA. This corpus contains 106 hours of video, corresponding to 172 editions of evening broadcast news "Le 20 heures" of French public channel "France 2", from January 1st 2007 to June 30st 2007.
+
+These videos are segmented automatically into shots. Only shots that are longer than 2 seconds are consider for the annotation and the evaluation.
+
+\subsection{Automatic metadata provided}
+
+https://github.com/MediaevalPersonDiscoveryTask/baseline
+
+Image processing:
+\begin{itemize}
+\item Face detection and tracking
+\item Face descriptor (HoG compute on 7 facial landmarks)
+\item Face diarization
+\end{itemize}
+
+Audio processing:
+\begin{itemize}
+\item Speech turn segmentation
+\item Speech turn descriptors based on BIC distances
+\item Speaker diarization
+\end{itemize}
+
+Speaking Face:
+\begin{itemize}
+\item Extraction of a speaking face descriptor
+\item Compute the probabilities that a face correspond to the current speaker
+\end{itemize}
+
+For name sources: 
+\begin{itemize}
+\item Video OCR for written names in a title box
+\item Speech transcription and named entities detection
+\end{itemize}
+
+Fusion system baseline: late naming
+
+\begin{enumerate}
+\item Propagation of written names onto speaker cluster. 
+\item Propagation of speaker identities to the face with the higher probability to be the speaker
+\end{enumerate}
+
+Fusion Limsi system: constraint clustering
+
+In \cite{}, we present an audio-video diarization process that used overlaid names to both names clusters and also constrain the clustering to prevent the fusion of clusters associated to different overlaid names.
+
+
+
 
 
 \section{Ground truth}
 
-Here is how the search experiment is designed. Based on participant submissions, we will select a set of queries following the form: “PersonFirstName PersonLastName” possibly restricted to a temporal interval. For each query and for each video within the chosen period, the shots for which a submitted person name is close to the query name (i.e. by applying a predefined threshold on a string distance) will be selected and ranked according to their confidence score.
+Groundtruth will be created a posteriori by manually checking all the evidences proposed by participant. From correct evidences we can extract a mugshot that can help us for the second step, the manual annotation of speaking faces in selected shots.
 
-\subsection{Collaborative annotation}
+\subsubsection{Evidence}
 
-Groundtruth will be created a posteriori by manually checking the top N shots proposed by participants for each request and the associated evidence. We will kindly ask participants to contribute to the annotation via the collaborative annotation webapp developed in the framework of the CHISTERA Camomile project. Evidences provided by participants will ease and speed up the annotation process. An online adjudication interface will be opened after the first round of evaluations to solve remaining ambiguous cases.
+In this first step (see figure \ref{fig:evidence}), we ask to the annotator to check if the person correspond to the evidence is visible in the shot and has his name written on screen during the shot or pronounced by a speaker (shot +- 5 seconds). If this is the case, the annotator draw a bounding box around the same to create a mugshot for this person.
 
-\subsection{Web interface}
+\begin{figure}[htb]
+ \center 
+ \includegraphics[width=0.8\linewidth]{figs/evidence_interface.png}
+ \centering
+ \caption {Web annotation interface of evidences.}
+ \label{fig:evidence}
+\end{figure}
+
+\subsubsection{label}
+
+In the second step, for each shot (at the left in the figure \ref{fig:label}), we used all the submissions of participants to build a set of hypothesis person names (the mugshot at the right in the figure \ref{fig:label}). We ask to the annotator to move these mug shot to the right position (don't know, no visible, silent face, speaking face). At the bottom, we also proposed some mugshots proposed or already annotated in the near shot. A search field can be used to find a person if it is not proposed. A figure with a question mark symbolize that a speaking face is visible but the annotator don't known who is it.
+
+\begin{figure}[htb]
+ \center 
+ \includegraphics[width=0.8\linewidth]{figs/label_interface.png}
+ \centering
+ \caption {Web annotation interface of labels.}
+ \label{fig:label}
+\end{figure}
+
+
 
 \section{Evaluation procedure}
 
@@ -180,15 +246,23 @@ Average Precision will be modified slightly to take the quality of the evidence 
 
 
 
-\section{Baseline}
+\section{Baseline and Limsi system performances}
 
-\subsection{Late naming}
-
-Propagation of written names onto speaker cluster. 
-
-Propagation of speaker identities to the face with the higher probability to be the speaker
-
-\subsection{Constraint clustering}
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{|c||c|c|}
+    \hline
+          			& Baseline & Limsi      \\
+    \hline
+    \hline    
+    MAP				&		   &				\\
+    Evi Correctness	&		   &				\\ 
+    EwMAP			&		   &				\\
+    \hline    
+   \end{tabular}
+  \caption{Baseline and Limsi system performances}
+  \label{tab:perfs}
+\end{table}
 
 
 
