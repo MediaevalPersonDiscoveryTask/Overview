@@ -55,7 +55,10 @@
 %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
 
-\title{Multimodal Person Discovery in Broadcast TV}
+\title{
+Multimodal Person Discovery in Broadcast TV \\ 
+at Mediaeval 2015
+}
 %
 % You need the command \numberofauthors to handle the 'placement
 % and alignment' of the authors beneath the title.
@@ -81,7 +84,7 @@
 % without further effort on your part as the last section in
 % the body of your article BEFORE References or any Appendices.
 
-\numberofauthors{3} 
+\numberofauthors{1} 
 
 \author{
 % You can go ahead and credit any number of authors here,
@@ -96,13 +99,10 @@
 %
 % 1st. author
 \alignauthor
-Johann Poignant\\
-\alignauthor
-Herv\'e Bredin\\
+Johann Poignant, Herv\'e Bredin, Claude Barras \\
        \affaddr{LIMSI - CNRS - Rue John Von Neumann, Orsay, France.}
        \email{firstname.lastname@limsi.fr}
-\alignauthor
-Claude Barras\\
+\\
 }
 % There's nothing stopping you putting the seventh, eighth, etc.
 % author on the opening page (as the 'third row') but we ask,
@@ -122,19 +122,21 @@ Given raw TV broadcasts, each shot must be automatically tagged with the name(s)
 
 TV archives maintained by national institutions such as the French INA, the Netherlands Institute for Sound \& Vision, or the BBC are rapidly growing in size. The need for applications that make these archives searchable has led researchers to devote concerted effort to developing technologies that create indexes.
 
-Indexes that represent the location and identity of people in the archive are indispensable for searching archives. Human nature leads people to be very interested in other people. However, at the moment that content is created or broadcast, it is not always possible to predict which people will be the most important to find in the future. Someone who appeared in a broadcast, but was relatively unnoticed, might suddenly start generating a buzz and become a trending topic on social networks or search engines. For this reason, it is not possible to assume that a biometric models capable of detecting an individual, will be present at indexing time. For some people such a model may not be available in advance, simply because they are not (yet) famous. In such cases, it is also possible that archivists annotating content by hand do not even know the name of the person. The goal of this task is to address the challenge of indexing people in the archive, under real-world conditions (i.e., there is no pre-set list of people to index). 
+Indexes that represent the location and identity of people in the archive are indispensable for searching archives. Human nature leads people to be very interested in other people. However, at the moment that content is created or broadcast, it is not always possible to predict which people will be the most important to find in the future. Someone who appeared in a broadcast, but was relatively unnoticed, might suddenly start generating a buzz and become a trending topic on social networks or search engines. For this reason, it is not possible to assume that a biometric models capable of detecting an individual, will be present at indexing time. For some people such a model may not be available in advance, simply because they are not (yet) famous. In such cases, it is also possible that archivists annotating content by hand do not even know the name of the person. The goal of this task is to address the challenge of indexing people in the archive, under real-world conditions (i.e., there is no pre-set list of people to index). \\
 
-This task represents an extension of the (now completed) French REPERE challenge, which focused on multimodal person recognition in TV broadcast. The main objective of this challenge was to answer the two questions "Who speaks when?" and "Who appears when?" using any sources of information (including pre-existing biometric models and person names extracted from text overlay and speech transcripts). 
+Until very recently, research works dealt only with speaker or face identification. We can mention the works of \textit{Canseco et al.}~\cite{CANSECO--ASRU--2005, CANSECO--INTERSPEECH--2004} as the first paper that did not use biometric models to identify speakers based on pronounced names. Following works improved this idea: \cite{ESTEVE--INTERSPEECH--2007, JOUSSE--ICCASP--2009, MAUCLAIR--Odyssey--2006, TRANTER--ICASSP--2006}. However, in all the above studies, the identification error rate is very high when automatically recognized (and noisy) pronounced names are used as source of naming information. For face identification, in \cite{HOUGHTON--IS--1999, SATOH--IEEEMM--1999, YANG--ACMMM--2004, YANG--ACMMM--2005} they use written names on screen in a title box as source of identities, but the high word error rate on overlaid names transcription greatly limited the use of this source of information.
 
-In this new task, only unsupervised algorithms (i.e., algorithms not relying on pre-existing labels or biometric models) are admitted. To ensure high quality indexes, those algorithms should also help human annotators double-check these indexes by providing an evidence of the claimed identity (especially for people who are not yet famous). 
+In 2011 began the REPERE challenge~\cite{BERNARD--SLAM--2013, KAHN--CBMI--2012}. It aimed at supporting research on person recognition in multi-modal conditions. The main objective of this challenge was to answer the two questions "Who speaks when?" and "Who appears when?" using any sources of information (including pre-existing biometric models and person names extracted from text overlay and speech transcripts). To assess the technology progress, annual evaluation campaigns were organized from 2012 to 2014. In this context, the REPERE corpus~\cite{GIRAUDEL--LREC--2012}, a French video corpus with multi-modal annotation, was developed. 3 consortiums composed of multiple teams (including ourselves) participated to this challenge. Thanks to this corpus, new research contributions appeared using the multi-modal aspect (\cite{BECHET--INTERSPEECH--2014, BENDRIS--CBMI--2013, BREDIN--ODYSSEY--2014, BREDIN--INTERSPEECH--2013, BREDIN--SLAM--2013, BREDIN--IJMIR--2014, FAVRE--SLAM--2013, GAY--CBMI--2014, POIGNANT--ASLP--2015, POIGNANT--SLAM--2013, POIGNANT--INTERSPEECH--2012, POIGNANT--MTAP--2015, ROUVIER--CBMI--2014})  . 
 
-\section{Goal of the task}
+\subsection{Goal of the task}
 
 Given raw TV broadcasts, each shot must be automatically tagged with the name(s) of people who can be both seen as well as heard in the shot. The list of people is not known a priori and their names must be discovered in an unsupervised way from provided text overlay or speech transcripts. 
 
 Participants are provided with a collection of TV broadcasts pre-segmented into shots, along with the output of several baseline components: speaker diarization, face detection and tracking, speech transcription, video OCR and named entity detection. 
 
-Participants are asked to provide, for each shot, the list of names of persons speaking AND appearing at the same time. The main novelty of the task is that the list of persons is not provided a priori, and person models (neither voice nor face) may not be trained on external data. The only way to identify a person is by finding their name in the audio (e.g., using speech transcription) or visual (e.g., using optical character recognition) streams and associating them to the correct person making the task completely unsupervised. For each returned shot, participants are also asked to provide the evidence justifying their assertion (e.g. a short excerpt of the test set showing the person AND its name at the same time).
+Participants are asked to provide, for each shot, the list of names of persons speaking AND appearing at the same time. The main novelty of the task is that the list of persons is not provided a priori, and person models (neither voice nor face) may not be trained on external data. The only way to identify a person is by finding their name in the audio (e.g., using speech transcription) or visual (e.g., using optical character recognition) streams and associating them to the correct person making the task completely unsupervised (i.e., algorithms not relying on pre-existing labels or biometric models). 
+
+For each returned shot, participants are also asked to provide the evidence justifying their assertion (e.g. a short excerpt of the test set showing the person AND its name at the same time). This should help human annotators especially for people who are not yet famous. 
 
 \begin{figure}[htb]
  \center 
@@ -144,103 +146,39 @@ Participants are asked to provide, for each shot, the list of names of persons s
  \label{fig:evidence}
 \end{figure}
 
-In figure~\ref{fig:evidence}, shot \#1 is an evidence for person A (his name is written on screen during the shot) and shot \#3 is an evidence for person B (her name is pronounced +- 5 seconds before, after or during the shot).
-
-\section{Related works}
-
-Until very recently, research works dealt only with one of the two modalities (we could not find early attempts were both face and speaker identification tasks were treated simultaneously). 
-
-For speaker identification, we can mention the works of \textit{Canseco et al.}~\cite{CANSECO--INTERSPEECH--2004} and \cite{CANSECO--ASRU--2005} as the first paper that did not use biometric models to identify speakers. Following works improved this idea: \cite{TRANTER--ICASSP--2006}, \cite{MAUCLAIR--Odyssey--2006}, \cite{ESTEVE--INTERSPEECH--2007} and \cite{JOUSSE--ICCASP--2009}. However, in all the above studies, the identification error rate is very high when automatically recognized (and noisy) pronounced names are used as source of naming information. \\
-
-Written names were first used for a face identification task in broadcast news (\cite{SATOH--IEEEMM--1999}, \cite{HOUGHTON--IS--1999}, ~\cite{YANG--ACMMM--2004}, \cite{YANG--ACMMM--2005}), but the high word error rate on overlaid names transcription greatly limited the use of this source of information.
-
-In 2011 began the REPERE challenge~\cite{KAHN--CBMI--2012}, \cite{BERNARD--SLAM--2013}, it aimed at supporting research on person recognition in multi-modal conditions. To assess the technology progress, annual evaluation campaigns were organized from 2012 to 2014. In this context, the REPERE corpus~\cite{GIRAUDEL--LREC--2012}, a French video corpus with multi-modal annotation, was developed. 3 consortiums composed of multiple teams (including ourselves) participated to this challenge. Thanks to this corpus, new research contributions appeared using written names on screen wisely. 
-
-In~\cite{POIGNANT--INTERSPEECH--2013} we have proposed a fair comparison between written names and pronounced names on their ability to provide names of speakers present in TV Broadcast. We have shown that for videos where written names are available, like for news TV or debat show, it is more interesting to try to name persons with written names. Pronounced names show a potential with manual annotation but speech transcription and named-entity detection errors reduce this potential for naming persons with good precision.
-
-This paradigm shift enables us to develop new methods to identify people visible/speaking using the written names or pronounced names as a primary source of identity.
-
-We proposed an unsupervised speaker identification system~\cite{POIGNANT--INTERSPEECH--2012} based only on written names as source of names (extracted using the tool LOOV~\cite{POIGNANT--ICME--2012}) in TV broadcast. The main idea was to build mono-modal clusters (faces or speakers) and to associate written names to these clusters based on their co-occurrences (un-supervised approach). This work was extended in~\cite{BREDIN--SLAM--2013}, \cite{POIGNANT--SLAM--2013}, \cite{POIGNANT--ASLP--2015} and \cite{POIGNANT--MTAP--2015} with the modification of the agglomerative clustering process. This process integrated directly the knowledge of written names to both identify clusters and also to prevent the merging of clusters named differently.
-
-Another work that is worth being mentioned is using Integer Linear Programming (ILP) for speech clustering~\cite{BREDIN--INTERSPEECH--2013}, \cite{BREDIN--IJMIR--2014} and \cite{BREDIN--ODYSSEY--2014}. The main idea is to replace the classical agglomerative BIC clustering by an ILP clustering and at the same time integrating written names to identify speech clusters. First, multi-modal similarity graph is built, were intra-modal links correspond to the similarity of mono-modal elements (speech turns: BIC distance, written names: identical or not) and cross-modal links correspond to the temporal co-occurrence between written names and speech turns. As a written name has a high probability to match the current speaker, identification of speech turns via the ILP solver is equivalent to find the less expensive way to connect names and speech turns.
-
-In~\cite{FAVRE--SLAM--2013}, speakers are named by the propagation of written names and pronounced names and also with biometrics speaker models, then written names and speaker identities are propagated to faces based on their co-occurrence. Authors also integrate a set of manual rules for a specific show to post-process their output (e.g. \textit{if one of the anchors is speaking and two faces are detected, then the second face is given the identity of the second anchor}). They extended these works in~\cite{BECHET--INTERSPEECH--2014}, \cite{ROUVIER--CBMI--2014} with the use of automatic scene analysis (camera identification and scene classification as studio or report). This system needs additional annotations (scene type, camera position) for a specific show. Once a camera has been identified, they can deduct those who are visible on the screen (e.g., if the camera filming the anchor has been identified, they infer that the anchor is visible in screen). Finally, \cite{BENDRIS--CBMI--2013} proposed to integrate a lip activity detector to propagate speakers identities to face. Again, rules are used to propagate a name to a speaker/face.
-
-Last but not least, \textit{Gay et al}.~\cite{GAY--CBMI--2014} proposed to propagate written names onto multi-modal speaker/face clusters. First, speakers and face diarization are performed in parallel, then speaker and face clusters are grouped based on their co-occurrence. They are associated to written names with two methods. The first one relies on co-occurrence information between written names and speaker/face clusters, and rule-based decisions which assign a name to each mono-modal cluster. The second method uses a Conditional Random Field (CRF) which combines different types of co-occurrence statistics and pair-wised constraints to jointly identify speakers and faces.
-
+In figure~\ref{fig:evidence}, shot \#1 is an evidence for Mr A (his name is written on screen during the shot) and shot \#3 is an evidence for Mrs B (her name is pronounced during the shot +- 5 seconds).
 
 \section{The data set}
 
 The original REPERE corpus set will be used as development set. It is composed of various TV shows (focusing on news, politics and people) from two French TV channels. It will be distributed by ELDA (Evaluation and Language resources Distribution Agency) freely or at distribution cost. Among those 137 hours, 50 are already manually annotated. Audio annotations are dense and provide speech transcripts and identity-labeled speech turns. Video annotations are sparse (one image every 10 seconds) and provide overlaid text transcripts and identity-labeled face segmentation. Both speech and overlaid text transcripts are tagged with named entities.
 
-The test set is composed of French TV news provided by INA. This corpus contains 106 hours of video, corresponding to 172 editions of evening broadcast news "Le 20 heures" of French public channel "France 2", from January 1st 2007 to June 30st 2007. There is no existing annotations corresponding to our task, they will be manually created a posteriori with the help of the participant submissions.
+The test set is composed of French TV news provided by INA. This corpus contains 106 hours of video, corresponding to 172 editions of evening broadcast news "Le 20 heures" of French public channel "France 2", from January 1st 2007 to June 30st 2007. There is no existing annotations corresponding to our task, they were be manually created a posteriori with the help of the participant submissions.
 
-These videos are segmented automatically into shots. Only shots that are longer than 2 seconds are consider for the annotation and the evaluation.
+%These videos are segmented automatically into shots. Only shots that are longer than 2 seconds should be process
+
+\subsection{Ground truth}
+
+Ground truth has be created a posteriori in two steps: first, by manually checking all the evidences proposed by participant. The correct evidences was used to extract mugshots that can help annotators during the second step, the manual verification of speaking faces in the shots proposed by participants.
 
 \subsection{Metadata provided}
 
-As the task is strongly multi-modal, we provided a large set of automatic sub-components that can help participants to answer the task. The source code, in python and C++\footnote{https://github.com/MediaevalPersonDiscoveryTask/baseline}, is freely provided to participants. 
-
-Image processing:
-\begin{itemize}
-\item Face detection and tracking
-\item Face Hog descriptor computed on 7 facial landmarks
-\item Face diarization
-\item Similarity matrix between faces
-\item Video OCR for written names in a title box (LOOV tool~\cite{POIGNANT--ICME--2012})
-\end{itemize}
-
-Audio processing:
-\begin{itemize}
-\item Speech turn segmentation
-\item Speaker diarization based on BIC distance
-\item Similarity matrix between speech turns
-\item Speech transcription and named entities detection
-\end{itemize}
-
-Speaking face processing:
-\begin{itemize}
-\item Similarity matrix between speaker and co-occurring faces
-\end{itemize}
-
-Fusion system baseline:
-\begin{enumerate}
-\item Propagation of written names onto speaker cluster \cite{POIGNANT--INTERSPEECH--2012}. 
-\item Propagation of speaker identities to the face with the higher probability to be the speaker
-\end{enumerate}
-
-
-
-
-\section{Ground truth}
-
-Ground truth has be created a posteriori in  two steps: first, by manually checking all the evidences proposed by participant. The correct evidences was used to extract mugshot that can help us for the second step, the manual verification of speaking face proposed by participants.
-
-\subsection{Evidence}
-
-In this first step (see figure \ref{fig:ann_evidence}), for each evidences, we ask the annotator to check if the person name is written on screen during the shot or pronounced by a speaker (shot +- 5 seconds). If this is the case, we ask the annotator to draw a bounding box around the corresponding person to create a mugshot.
+As the task is strongly multi-modal, we provided a large set of automatic sub-components that can help participants to process the videos (see figure \ref{fig:baseline}). The source code, in python and C++\footnote{https://github.com/MediaevalPersonDiscoveryTask/baseline}, is freely provided to participants. 
 
 \begin{figure}[htb]
  \center 
- \includegraphics[width=0.8\linewidth]{figs/evidence_interface.png}
+ \includegraphics[width=1\linewidth]{figs/baseline.png}
  \centering
- \caption {Web annotation interface of evidences.}
- \label{fig:ann_evidence}
+ \caption {Sub-components provided (in green)}
+ \label{fig:baseline}
 \end{figure}
 
-\subsection{label}
+First, we have segmented the audio stream into speech turn and detected and tracked faces on screen. Then we computed mono-modal similarities (Hog descriptors on 7 facial landmarks for faces, BIC distance for speakers) between elements (face \emph{vs} face and speech turn \emph{vs} speech turn). We also provided a similarity between speakers and co-occurring faces as in \cite{POIGNANT--MTAP--2015}. These three matrix contains probabilities and can be comparable.
 
-In the second step, for each shot (at the left in the figure \ref{fig:ann_label}), we used all the submissions of participants to build a set of hypothesis person names (the mugshot at the right in the figure \ref{fig:label}). We ask to the annotator to move these mug shot to the right position (don't know, no visible, silent face, speaking face). At the bottom, we also proposed some additional mugshots. A search field can be used to find another person. A figure with a question mark symbolize that a speaking face is visible but the annotator don't known who is it.
+Clustering was done on mono-modal matrix to try to merge all faces (respectively speech turns) of the same person (respectively speaker). 
 
-\begin{figure}[htb]
- \center 
- \includegraphics[width=0.8\linewidth]{figs/label_interface.png}
- \centering
- \caption {Web annotation interface of labels.}
- \label{fig:ann_label}
-\end{figure}
+Person names are extracted from automatic speech recognition (ASR) for pronounced names (PN) and from the optical characters recognition (OCR) (LOOV tool~\cite{POIGNANT--ICME--2012}) for written names(WN).
 
-
+We also provide a fusion system baseline for participants that would only improved a sub-component. It proceed in two step, first written names are propagate onto speaker clusters \cite{POIGNANT--INTERSPEECH--2012}, then speaker identities are propagate to the speaking face with the higher similarity (according to a threshold).
 
 \section{Evaluation procedure}
 
@@ -251,46 +189,18 @@ Average Precision will be modified slightly to take the quality of the evidence 
 $$ shot relevance = \alpha * shot is relevant + (1 - \alpha) * evidence is correct $$
 
 
-\section{System performances}
-
 \subsection{LeaderBoard}
 
-As the test set is different than the dev set, we propose two deadline. The first, 1st July 2015, is a classical deadline. Participants don't have access to neither information on their system performance. The second one, 8 July 2015, they have access the MAP and the rank of their primary run, compute on a secret subset of the test set. This two informations if available on a website, updating every 6 hours.
-
-\subsection{Limsi system}
-
-In \cite{POIGNANT--ASLP--2015} and \cite{POIGNANT--MTAP--2015}, we present an audio-video diarization process that used overlaid names to both names clusters and also constrain the clustering to prevent the fusion of clusters associated to different overlaid names.
-
-
-
-\begin{table}[ht]
-  \centering
-  \begin{tabular}{|c||c|c|c|}
-    \hline
-    Run      					& MAP 		& Evi Correctness 	& EwMAP     \\
-    \hline
-    \hline    
-    Baseline						&		   	&		   			&			\\
-    Limsi 						&		   	&		   			&			\\ 
-    \hline    
-    \hline    
-    \multicolumn{4}{|c|}{Tune on leaderboard} 								\\
-    \hline    
-    \hline    
-    	Limsi						&		   	&		   			&			\\
-    \hline    
-   \end{tabular}
-  \caption{Baseline and Limsi system performances}
-  \label{tab:perfs}
-\end{table}
-
-
+As the dev set is out of domain, we propose to participants to submit their system for a second deadline one week later. Meanwhile, they have access to the MAP, compute on a secret subset of the test set, of their system performance. 
 
 \section{Acknowledgments}
 
 INA \\
 ELDA \\
+CAMOMILE \\
 
+
+\newpage
 
 % The following two commands are all you need in the
 % initial runs of your .tex file to
