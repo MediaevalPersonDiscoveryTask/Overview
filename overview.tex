@@ -45,7 +45,12 @@
 %
 % For tracking purposes - this is V2.0 - May 2012
 
+
+
 \documentclass{acm_proc_article-me}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 
 \usepackage{amssymb}
 \usepackage{amsfonts}
@@ -140,24 +145,30 @@ Johann Poignant, Herv\'e Bredin, Claude Barras \\
 
 \maketitle
 \begin{abstract}
-In this paper, we described the newly "Multimodal Person Discovery in Broadcast TV" task formed part of the MediaEval 2015 evaluation campaign. The purpose of this task is to return the name(s) of people who can be both seen as well as heard for each shots of a video. The list of people is not known a priori and their names must be discovered in an unsupervised way from provided text overlay or speech transcripts. The task will be evaluated using standard information retrieval metrics based on a posteriori collaborative annotation of the corpus.
+In this paper, we describe the new "Multimodal Person Discovery in Broadcast TV" task part of the MediaEval 2015 evaluation campaign. The purpose of this task is to return the name(s) of people who can be both seen as well as heard for each shots of a video. The list of people is not known a priori and their names must be discovered in an unsupervised way from media content using provided text overlay or speech transcripts. The task is evaluated using standard information retrieval metrics based on a posteriori collaborative annotation of the corpus.
 \end{abstract}
 
 \section{Motivation}
 
 TV archives maintained by national institutions such as the French INA, the Netherlands Institute for Sound \& Vision, or the BBC are rapidly growing in size. The need for applications that make these archives searchable has led researchers to devote concerted effort to developing technologies that create indexes.
 
-Indexes that represent the location and identity of people in the archive are indispensable for searching archives. Human nature leads people to be very interested in other people. However, at the moment that content is created or broadcast, it is not always possible to predict which people will be the most important to find in the future. Someone who appeared in a broadcast, but was relatively unnoticed, might suddenly start generating a buzz and become a trending topic on social networks or search engines. For this reason, it is not possible to assume that a biometric models capable of detecting an individual, will be present at indexing time. For some people such a model may not be available in advance, simply because they are not (yet) famous. In such cases, it is also possible that archivists annotating content by hand do not even know the name of the person. The goal of this task is to address the challenge of indexing people in the archive, under real-world conditions (i.e., there is no pre-set list of people to index). \\
+Indexes that represent the location and identity of people in the archive are indispensable for searching archives. Human nature leads people to be very interested in other people. However, when the content is created or broadcast, it is not always possible to predict which people will be the most important to find in the future. 
+%Someone who appeared in a broadcast, but was relatively unnoticed, might suddenly start generating a buzz and become a trending topic on social networks or search engines. 
+For this reason, it is not possible to assume that a biometric models will always be present at indexing time. For some people such a model may not be available in advance, simply because they are not (yet) famous. In such cases, it is also possible that archivists annotating content by hand do not even know the name of the person. The goal of this task is to address the challenge of indexing people in the archive, under real-world conditions (i.e., there is no pre-set list of people to index). 
 
-Until very recently, research works dealt only with speaker or face identification. We can mention the works of \textit{Canseco et al.}~\cite{CANSECO--ASRU--2005, CANSECO--INTERSPEECH--2004} as the first paper that did not use biometric models to identify speakers based on pronounced names. Following works improved this idea: \cite{ESTEVE--INTERSPEECH--2007, JOUSSE--ICCASP--2009, MAUCLAIR--Odyssey--2006, TRANTER--ICASSP--2006}. However, in all the above studies, the identification error rate is very high when automatically recognized (and noisy) pronounced names are used as source of naming information. For face identification, in \cite{HOUGHTON--IS--1999, SATOH--IEEEMM--1999, YANG--ACMMM--2004, YANG--ACMMM--2005} they use written names on screen in a title box as source of identities, but the high word error rate on overlaid names transcription greatly limited the use of this source of information.
+Until very recently, research works dealt only with speaker or face identification. We can mention the works of \textit{Canseco et al.}~\cite{CANSECO--ASRU--2005, CANSECO--INTERSPEECH--2004} as the first paper that did not use biometric models to identify speakers based on pronounced names. Following works improved this idea: \cite{ESTEVE--INTERSPEECH--2007, JOUSSE--ICCASP--2009, MAUCLAIR--Odyssey--2006, TRANTER--ICASSP--2006}. However, in all the above studies, the identification error rate is very high when automatically recognized (and noisy) pronounced names are used as source of naming information. For face identification, \cite{HOUGHTON--IS--1999, SATOH--IEEEMM--1999, YANG--ACMMM--2004, YANG--ACMMM--2005}  use written names on screen in a title box as source of identities, but the high word error rate on overlaid names transcription greatly limited the use of this source of information.
 
-In 2011 began the REPERE challenge~\cite{BERNARD--SLAM--2013, KAHN--CBMI--2012}. It aimed at supporting research on person recognition in multi-modal conditions. The main objective of this challenge was to answer the two questions \emph{``who speaks when?''} and \emph{``who appears when?''} using any sources of information (including pre-existing biometric models and person names extracted from text overlay and speech transcripts). To assess the technology progress, annual evaluation campaigns were organized from 2012 to 2014. In this context, the REPERE corpus~\cite{GIRAUDEL--LREC--2012} with multi-modal annotation was developed. 3 consortiums composed of multiple teams (including ourselves) participated to this challenge. Thanks to this challenge, new research contributions appeared using the multi-modal aspect (\cite{BECHET--INTERSPEECH--2014, BENDRIS--CBMI--2013, BREDIN--ODYSSEY--2014, BREDIN--INTERSPEECH--2013, BREDIN--SLAM--2013, BREDIN--IJMIR--2014, FAVRE--SLAM--2013, GAY--CBMI--2014, POIGNANT--ASLP--2015, POIGNANT--SLAM--2013, POIGNANT--INTERSPEECH--2012, POIGNANT--MTAP--2015, ROUVIER--CBMI--2014})  .
+In 2011 began the REPERE challenge~\cite{BERNARD--SLAM--2013, KAHN--CBMI--2012}. It aimed at supporting research on person recognition in multi-modal conditions. The main objective of this challenge was to answer the two questions \emph{``who speaks when?''} and \emph{``who appears when?''} using any sources of information (including pre-existing biometric models and person names extracted from text overlay and speech transcripts). To assess the technology progress, annual evaluation campaigns were organized from 2012 to 2014. In this context, the REPERE corpus~\cite{GIRAUDEL--LREC--2012} with multi-modal annotation was developed. 3 consortiums composed of multiple teams (including ourselves) participated to this challenge. Thanks to this challenge, new research contributions appeared using the multi-modal aspect (\cite{BECHET--INTERSPEECH--2014, BENDRIS--CBMI--2013, BREDIN--ODYSSEY--2014, BREDIN--INTERSPEECH--2013, BREDIN--SLAM--2013, BREDIN--IJMIR--2014, FAVRE--SLAM--2013, GAY--CBMI--2014, POIGNANT--ASLP--2015, POIGNANT--SLAM--2013, POIGNANT--INTERSPEECH--2012, POIGNANT--MTAP--2015, ROUVIER--CBMI--2014}). This led us to proposed a new task at Mediaeval 2015 in the context of the CAMOMILE project\footnote{This work was partly funded by the French National Agency for Research under grant ANR-12-CHRI-0006-01.}.
+
+
 
 \section{Definition of the task}
 
 Participants are provided with a collection of TV broadcasts pre-segmented into shots.
 Each shot $s \in \shots$ must be automatically tagged with the names of people both speaking and appearing at the same time during the shot: this tagging algorithm is denoted by $\hypLabels : \shots \mapsto \mathcal{P}(\hypNames)$ in the rest of the paper.
 The main novelty of the task is that the list of persons is not provided \emph{a priori}, and person models (neither voice nor face) may not be trained on external data. The only way to identify a person is by finding their name $n \in \hypNames$ in the audio (e.g. using speech transcription -- ASR) or visual (e.g. using optical character recognition -- OCR) streams and associating them to the correct person. This makes the task completely unsupervised (i.e. using algorithms not relying on pre-existing labels or biometric models).
+
+Because person names are detected and transcribed automatically, they may contain transcription errors to a certain extent (more on that later in Section~\ref{sec:metric}). In the following, we denote by $\refNames$ the set of all possible person names in the universe, correctly formatted as \texttt{firstname\_lastname} (while $\hypNames$ is the set of hypothesized names).
 
 \begin{figure}[!htb]
  \center
@@ -167,12 +178,12 @@ The main novelty of the task is that the list of persons is not provided \emph{a
  \label{fig:evidence}
 \end{figure}
 
-To ensure participants follow this strict \emph{``no biometric supervision''} constraint, each hypothesized name $n \in \hypNames$ must be backed up by a carefully selected and unique shot prooving that the person actually holds this name $n$: we call this an evidence and denote it by $\hypEvidences : \hypNames \mapsto \shots$. In real-world conditions, this evidence would help a human annotator double-check the automatically-generated index, even for people they did not know beforehand.
+To ensure that participants follow this strict \emph{``no biometric supervision''} constraint, each hypothesized name $n \in \hypNames$ must be backed up by a carefully selected and unique shot prooving that the person actually holds this name $n$: we call this an evidence and denote it by $\hypEvidences : \hypNames \mapsto \shots$. In real-world conditions, this evidence would help a human annotator double-check the automatically-generated index, even for people they did not know beforehand.
 
 Two types of evidence are allowed: an \emph{image} evidence is a shot during which a person is visible, and their name is written on screen; an \emph{audio} evidence is a shot during which a person is visible, and their name is pronounced at least once during a $[\text{shot start time} - 5s, \text{shot end time} + 5s ]$ neighborhood.
 For instance, in Figure~\ref{fig:evidence}, shot \#1 is an evidence for Mr A (because his name and his face are visible simultaneously on screen) while shot \#3 is an evidence for Mrs B (because her name is pronounced less than 5 seconds before or after her face is visble on screen).
 
-Because person names are detected and transcribed automatically, they may contain transcription errors to a certain extent (more on that later in Section~\ref{sec:metric}). In the following, we denote by $\refNames$ the set of all possible person names in the universe, correctly formatted as \texttt{firstname\_lastname} (while $\hypNames$ is the set of hypothesized names).
+
 
 \section{Datasets}
 
@@ -183,29 +194,29 @@ The test set was annotated \emph{a posteriori} based on participants' submission
 
 \section{Baseline and metadata}
 
-This task targets researchers from several communities including multimedia, computer vision, speech and natural language processing. Though the task is multimodal by design and necessitates expertise in various domains, the technological barriers to entry is lowered by the provision of a baseline system described in Figure~\ref{fig:baseline} and available as open-source software~\footnote{\url{http://github.com/MediaEvalPersonDiscovery}}.
+This task targets researchers from several communities including multimedia, computer vision, speech and natural language processing. Though the task is multimodal by design and necessitates expertise in various domains, the technological barriers to entry is lowered by the provision of a baseline system described in Figure~\ref{fig:baseline} and available as open-source software\footnote{\url{http://github.com/MediaEvalPersonDiscovery}}.
 For instance, a researcher from the speech processing community could focus its research efforts on improving speaker diarization and automatic speech transcription, while still being able to rely on provided face detection and tracking results to participate to the task.
 
 \begin{figure}[htb]
  \center
  \includegraphics[width=1\linewidth]{figs/baseline.png}
  \centering
- \caption {Multimodal baseline pipeline. Output of greyed out modules is available to participants.}
+ \caption {Multimodal baseline pipeline. Output of greyed out modules is provide to the participants.}
  \label{fig:baseline}
 \end{figure}
 
 The audio stream is segmented into speech turns, while faces are detected and tracked in the visual stream.
-Speech turns (resp. face tracks) are then compared and clustered based on MFCC and the Bayesian Information Criterion~\cite{CHEN--DARPA--1998} (resp. HOG\cite{DALAL--CVPR--2005} and Logistic Discriminant Metric Learning\cite{GUILLAUMIN--JCV--2012} on facial landmarks\cite{URICAR--VISAPP--2012}). The approach proposed in~\cite{POIGNANT--MTAP--2015} is also used to compute a probabilistic mapping between co-occuring faces and speech turns. Written (resp. pronounced) person names are automatically extracted from the visual stream (resp. the audio stream) using open source LOOV Optical Character Recognition~\cite{POIGNANT--ICME--2012} (resp. Automatic Speech Recognition~\cite{LAMEL--IWSLT--2011, DIANRELLI--IJCNLP--2011}). The fusion module is a two-steps algorithm: propagation of written names onto speaker clusters~\cite{POIGNANT--INTERSPEECH--2012} followed by propagation of speaker names onto co-occurring speaking faces.
+Speech turns (resp. face tracks) are then compared and clustered based on MFCC and the Bayesian Information Criterion~\cite{CHEN--DARPA--1998} (resp. HOG~\cite{DALAL--CVPR--2005} and Logistic Discriminant Metric Learning~\cite{GUILLAUMIN--JCV--2012} on facial landmarks~\cite{URICAR--VISAPP--2012}). The approach proposed in~\cite{POIGNANT--MTAP--2015} is also used to compute a probabilistic mapping between co-occuring faces and speech turns. Written (resp. pronounced) person names are automatically extracted from the visual stream (resp. the audio stream) using open source LOOV Optical Character Recognition~\cite{POIGNANT--ICME--2012} (resp. Automatic Speech Recognition~\cite{LAMEL--IWSLT--2011, DIANRELLI--IJCNLP--2011}). The fusion module is a two-steps algorithm: propagation of written names onto speaker clusters~\cite{POIGNANT--INTERSPEECH--2012} followed by propagation of speaker names onto co-occurring speaking faces.
 
 \section{Evaluation metric}
 \label{sec:metric}
 
-As the task aims an information retrieval use case, we used a variation of the classical Mean Average Precision (MAP) that integrate the correctness evaluation of evidences.
+As the task aims an information retrieval use case, we used a variation of the classical Mean Average Precision (MAP) that integrated the correctness evaluation of evidences.
 
 For each query $q \in \queries \subset \refNames$ (\texttt{firstname\_lastname}), the hypothesized person name $n_q$ with the highest Levenshtein ratio $\rho$ to the query $q$ is selected ($\ratio : \refNames \times \hypNames \mapsto [0, 1]$) -- allowing approximate name transcription:
 \begin{align}
 \displaystyle n_q & =\argmax_{n \in \hypNames} \rho\left(q, n \right) \\
-\intertext{Average precision $\text{AP}(q)$ is then computed classically~\cite{REF} based on relevant and returned shots:}
+\intertext{Average precision $\text{AP}(q)$ is then computed classically based on relevant and returned shots:}
 \text{relevant}(q) & = \{ s \in \shots \;|\; q \in \refLabels(s) \} \\
 \text{returned}(q) & = {\{ s \in \shots \;|\; n_q \in \hypLabels(s) \}}_{\begin{subarray}{l}\text{sorted by}\\
     \text{confidence}\end{subarray}} \\
@@ -219,11 +230,8 @@ For each query $q \in \queries \subset \refNames$ (\texttt{firstname\_lastname})
             \text{EwMAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} C(q) \cdot \text{AP}(q)
 \end{align}
 
-\section{Acknowledgments}
-
-INA \\
-ELDA  <--- on les a (beaucoup) payé, quand même !!! donc bon... \\
-CAMOMILE  <---- \\
+%\section{Acknowledgments}
+%This work was partly funded by the French National Agency for Research under grant ANR-12-CHRI-0006-01 (project CAMOMILE). This task was supported by the French National Audiovisual Institute (INA) and the Evaluations and Language resources Distribution Agency (ELDA).
 
 \newpage
 
