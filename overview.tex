@@ -47,6 +47,25 @@
 
 \documentclass{acm_proc_article-me}
 
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\newcommand\queries{\mathbb{Q}}
+
+\newcommand\refEvidences{\mathbb{E}}
+\newcommand\refLabels{\mathbb{L}}
+\newcommand\refNames{\mathbb{N}}
+\newcommand\shots{\mathbb{S}}
+
+\newcommand\hypEvidences{\mathcal{E}}
+\newcommand\hypLabels{\mathcal{L}}
+\newcommand\hypNames{\mathcal{N}}
+
+\newcommand\ratio{\rho}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 \begin{document}
 %
 % --- Author Metadata here ---
@@ -56,7 +75,7 @@
 % --- End of Author Metadata ---
 
 \title{
-Multimodal Person Discovery in Broadcast TV \\ 
+Multimodal Person Discovery in Broadcast TV \\
 at Mediaeval 2015
 }
 %
@@ -84,7 +103,7 @@ at Mediaeval 2015
 % without further effort on your part as the last section in
 % the body of your article BEFORE References or any Appendices.
 
-\numberofauthors{1} 
+\numberofauthors{1}
 
 \author{
 % You can go ahead and credit any number of authors here,
@@ -115,7 +134,8 @@ Johann Poignant, Herv\'e Bredin, Claude Barras \\
 
 \maketitle
 \begin{abstract}
-Given raw TV broadcasts, each shot must be automatically tagged with the name(s) of people who can be both seen as well as heard in the shot. The list of people is not known a priori and their names must be discovered in an unsupervised way from provided text overlay or speech transcripts. The task will be evaluated on a new French corpus (provided by INA), using standard information retrieval metrics based on a posteriori collaborative annotation of the corpus.
+% TODO
+
 \end{abstract}
 
 \section{Motivation}
@@ -126,79 +146,84 @@ Indexes that represent the location and identity of people in the archive are in
 
 Until very recently, research works dealt only with speaker or face identification. We can mention the works of \textit{Canseco et al.}~\cite{CANSECO--ASRU--2005, CANSECO--INTERSPEECH--2004} as the first paper that did not use biometric models to identify speakers based on pronounced names. Following works improved this idea: \cite{ESTEVE--INTERSPEECH--2007, JOUSSE--ICCASP--2009, MAUCLAIR--Odyssey--2006, TRANTER--ICASSP--2006}. However, in all the above studies, the identification error rate is very high when automatically recognized (and noisy) pronounced names are used as source of naming information. For face identification, in \cite{HOUGHTON--IS--1999, SATOH--IEEEMM--1999, YANG--ACMMM--2004, YANG--ACMMM--2005} they use written names on screen in a title box as source of identities, but the high word error rate on overlaid names transcription greatly limited the use of this source of information.
 
-In 2011 began the REPERE challenge~\cite{BERNARD--SLAM--2013, KAHN--CBMI--2012}. It aimed at supporting research on person recognition in multi-modal conditions. The main objective of this challenge was to answer the two questions "Who speaks when?" and "Who appears when?" using any sources of information (including pre-existing biometric models and person names extracted from text overlay and speech transcripts). To assess the technology progress, annual evaluation campaigns were organized from 2012 to 2014. In this context, the REPERE corpus~\cite{GIRAUDEL--LREC--2012}, a French video corpus with multi-modal annotation, was developed. 3 consortiums composed of multiple teams (including ourselves) participated to this challenge. Thanks to this corpus, new research contributions appeared using the multi-modal aspect (\cite{BECHET--INTERSPEECH--2014, BENDRIS--CBMI--2013, BREDIN--ODYSSEY--2014, BREDIN--INTERSPEECH--2013, BREDIN--SLAM--2013, BREDIN--IJMIR--2014, FAVRE--SLAM--2013, GAY--CBMI--2014, POIGNANT--ASLP--2015, POIGNANT--SLAM--2013, POIGNANT--INTERSPEECH--2012, POIGNANT--MTAP--2015, ROUVIER--CBMI--2014})  . 
+In 2011 began the REPERE challenge~\cite{BERNARD--SLAM--2013, KAHN--CBMI--2012}. It aimed at supporting research on person recognition in multi-modal conditions. The main objective of this challenge was to answer the two questions \emph{``who speaks when?''} and \emph{``who appears when?''} using any sources of information (including pre-existing biometric models and person names extracted from text overlay and speech transcripts). To assess the technology progress, annual evaluation campaigns were organized from 2012 to 2014. In this context, the REPERE corpus~\cite{GIRAUDEL--LREC--2012}, a French video corpus with multi-modal annotation, was developed. 3 consortiums composed of multiple teams (including ourselves) participated to this challenge. Thanks to this corpus, new research contributions appeared using the multi-modal aspect (\cite{BECHET--INTERSPEECH--2014, BENDRIS--CBMI--2013, BREDIN--ODYSSEY--2014, BREDIN--INTERSPEECH--2013, BREDIN--SLAM--2013, BREDIN--IJMIR--2014, FAVRE--SLAM--2013, GAY--CBMI--2014, POIGNANT--ASLP--2015, POIGNANT--SLAM--2013, POIGNANT--INTERSPEECH--2012, POIGNANT--MTAP--2015, ROUVIER--CBMI--2014})  .
 
-\subsection{Goal of the task}
+\section{Definition of the task}
 
-Given raw TV broadcasts, each shot must be automatically tagged with the name(s) of people who can be both seen as well as heard in the shot. The list of people is not known a priori and their names must be discovered in an unsupervised way from provided text overlay or speech transcripts. 
+Participants are provided with a collection of TV broadcasts pre-segmented into shots.
+Each shot $s \in \shots$ must be automatically tagged with the names of people both speaking and appearing at the same time during this very shot: this tagging algorithm is denoted by $\hypLabels : \shots \mapsto \mathcal{P}(\hypNames)$ in the rest of the paper.
+The main novelty of the task is that the list of persons is not provided \emph{a priori}, and person models (neither voice nor face) may not be trained on external data. The only way to identify a person is by finding their name $n \in \hypNames$ in the audio (e.g. using speech transcription -- ASR) or visual (e.g. using optical character recognition -- OCR) streams and associating them to the correct person.
+This makes the task completely unsupervised (i.e. using algorithms not relying on pre-existing labels or biometric models).
 
-Participants are provided with a collection of TV broadcasts pre-segmented into shots, along with the output of several baseline components: speaker diarization, face detection and tracking, speech transcription, video OCR and named entity detection. 
-
-Participants are asked to provide, for each shot, the list of names of persons speaking AND appearing at the same time. The main novelty of the task is that the list of persons is not provided a priori, and person models (neither voice nor face) may not be trained on external data. The only way to identify a person is by finding their name in the audio (e.g., using speech transcription) or visual (e.g., using optical character recognition) streams and associating them to the correct person making the task completely unsupervised (i.e., algorithms not relying on pre-existing labels or biometric models). 
-
-For each returned shot, participants are also asked to provide the evidence justifying their assertion (e.g. a short excerpt of the test set showing the person AND its name at the same time). This should help human annotators especially for people who are not yet famous. 
-
-\begin{figure}[htb]
- \center 
+\begin{figure}[!htb]
+ \center
  \includegraphics[width=1\linewidth]{figs/evidence.png}
  \centering
- \caption {Example of response wanted}
+ \caption {Expected output}
  \label{fig:evidence}
 \end{figure}
 
-In figure~\ref{fig:evidence}, shot \#1 is an evidence for Mr A (his name is written on screen during the shot) and shot \#3 is an evidence for Mrs B (her name is pronounced during the shot +- 5 seconds).
+To ensure participants follow this strict \emph{``no biometric supervision''} constraint, each hypothesized name $n \in \hypNames$ must be backed up by a carefully selected and unique shot prooving that the person actually holds this name $n$: we call this an evidence and denote it by $\hypEvidences : \hypNames \mapsto \shots$. In real-world conditions, this evidence would help a human annotator double-check the automatically-generated index, even for people they did not know beforehand.
 
-\section{The data set}
+Two types of evidence are allowed: an \emph{image} evidence is a shot during which a person is visible, and their name is written on screen; an \emph{audio} evidence is a shot during which a person is visible, and their name is pronounced at least once during a $[\text{shot start time} - 5s, \text{shot end time} + 5s ]$ neighborhood.
+For instance, in Figure~\ref{fig:evidence}, shot \#1 is an evidence for Mr A (because his name and his face are visible simultaneously on screen) while shot \#3 is an evidence for Mrs B (because her name is pronounced less than 5 seconds before or after her face is visble on screen).
 
-The original REPERE corpus set will be used as development set. It is composed of various TV shows (focusing on news, politics and people) from two French TV channels. It will be distributed by ELDA (Evaluation and Language resources Distribution Agency) freely or at distribution cost. Among those 137 hours, 50 are already manually annotated. Audio annotations are dense and provide speech transcripts and identity-labeled speech turns. Video annotations are sparse (one image every 10 seconds) and provide overlaid text transcripts and identity-labeled face segmentation. Both speech and overlaid text transcripts are tagged with named entities.
+Because person names are detected and transcribed automatically, they may contain transcription errors to a certain extent (more on that later in Section~\ref{sec:metric}). In the following, we denote by $\refNames$ the set of all possible person names in the universe, correctly formatted as \texttt{firstname\_lastname} (while $\hypNames$ is the set of hypothesized names).
 
-The test set is composed of French TV news provided by INA. This corpus contains 106 hours of video, corresponding to 172 editions of evening broadcast news "Le 20 heures" of French public channel "France 2", from January 1st 2007 to June 30st 2007. There is no existing annotations corresponding to our task, they were be manually created a posteriori with the help of the participant submissions.
+\section{Datasets}
 
-%These videos are segmented automatically into shots. Only shots that are longer than 2 seconds should be process
+The REPERE corpus -- distributed by ELDA -- serves as development set. It is composed of various TV shows (around news, politics and people) from two French TV channels, for a total of 137 hours. A subset of 50 hours is manually annotated. Audio annotations are dense and provide speech transcripts and identity-labeled speech turns. Video annotations are sparse (one image every 10 seconds) and provide overlaid text transcripts and identity-labeled face segmentation. Both speech and overlaid text transcripts are tagged with named entities.
+The test set -- distributed by INA -- contains 106 hours of video, corresponding to 172 editions of evening broadcast news \emph{``Le 20 heures''} of French public channel \emph{``France 2''}, from January 1st 2007 to June 30st 2007. It comes completely free of any annotation.
 
-\subsection{Ground truth}
+The test set was annotated \emph{a posteriori} based on participants' submissions. In the following, groundtruth is denoted by function $\refLabels : \shots \mapsto \mathcal{P}(\refNames)$ that maps each shot $s$ to the of names of every speaking face it contains. Function $\refEvidences : \shots \mapsto \mathcal{P}(\refNames)$ denotes the evidence groundtruth that maps each shot $s$ to the set of person names for which it actually is an evidence.
 
-Ground truth has be created a posteriori in two steps: first, by manually checking all the evidences proposed by participant. The correct evidences was used to extract mugshots that can help annotators during the second step, the manual verification of speaking faces in the shots proposed by participants.
+\section{Baseline and metadata}
 
-\subsection{Metadata provided}
-
-As the task is strongly multi-modal, we provided a large set of automatic sub-components that can help participants to process the videos (see figure \ref{fig:baseline}). The source code, in python and C++\footnote{https://github.com/MediaevalPersonDiscoveryTask/baseline}, is freely provided to participants. 
+This task targets researchers from several communities including multimedia, computer vision, speech and natural language processing. Though the task is multimodal by design and necessitates expertise in various domains, the technological barriers to entry is lowered by the provision of a baseline system described in Figure~\ref{fig:baseline} and available as open-source software~\footnote{\url{http://github.com/MediaEvalPersonDiscovery}}.
+For instance, a researcher from the speech processing community could focus its research efforts on improving speaker diarization and automatic speech transcription, while still being able to rely on provided face detection and tracking results to participate to the task.
 
 \begin{figure}[htb]
- \center 
+ \center
  \includegraphics[width=1\linewidth]{figs/baseline.png}
  \centering
- \caption {Sub-components provided (in green)}
+ \caption {Multimodal baseline pipeline. Output of greyed out modules is available to participants.}
  \label{fig:baseline}
 \end{figure}
 
-First, we have segmented the audio stream into speech turn and detected and tracked faces on screen. Then we computed mono-modal similarities (Hog descriptors on 7 facial landmarks for faces, BIC distance for speakers) between elements (face \emph{vs} face and speech turn \emph{vs} speech turn). We also provided a similarity between speakers and co-occurring faces as in \cite{POIGNANT--MTAP--2015}. These three matrix contains probabilities and can be comparable.
+% TODO: refaire la figure en mettant un fond gris aux modules dont la sortie est disponible.
+% de façon à ce que la figure soit aussi lisible en niveau de gris...
 
-Clustering was done on mono-modal matrix to try to merge all faces (respectively speech turns) of the same person (respectively speaker). 
+The audio stream is segmented into speech turns, while faces are detected and tracked in the visual stream.
+Speech turns (resp. face tracks) are then compared and clustered based on MFCC and the Bayesian Information Criterion (resp. HOG and Xxxxx Xxxxx Metric Learning). The approach proposed in~\cite{POIGNANT--MTAP--2015} is also used to compute a probabilistic mapping between co-occuring faces and speech turns. Written (resp. pronounced) person names are automatically extracted from the visual stream (resp. the audio stream) using open source LOOV Optical Character Recognition~\cite{POIGNANT--ICME--2012} (resp. Automatic Speech Recognition~\cite{REF}). The fusion module is a two-steps algorithm: propagation of written names onto speaker clusters~\cite{POIGNANT--INTERSPEECH--2012} followed by propagation of speaker names onto co-occurring speaking faces.
 
-Person names are extracted from automatic speech recognition (ASR) for pronounced names (PN) and from the optical characters recognition (OCR) (LOOV tool~\cite{POIGNANT--ICME--2012}) for written names(WN).
+\section{Evaluation metric}
+\label{sec:metric}
 
-We also provide a fusion system baseline for participants that would only improved a sub-component. It proceed in two step, first written names are propagate onto speaker clusters \cite{POIGNANT--INTERSPEECH--2012}, then speaker identities are propagate to the speaking face with the higher similarity (according to a threshold).
+Baratin autour du use case "information retrieval" pour justifier qu'on evalue
+avec une variante de la MAP.
 
-\section{Evaluation procedure}
-
-This procedure results in an Average Precision specific to the query and to the video. In order to prevent giving too much weight to predominant people or to individual video, we will first compute the Mean Average Precision over all videos where a particular person is detected, and then compute a Mean Mean Average Precision over all persons.
-
-Average Precision will be modified slightly to take the quality of the evidence into account. Hence, instead of a binary judgment (relevant vs. not relevant), shot relevance will be computed as follows (the value of α will be discussed during the development phase):
-
-$$ shot relevance = \alpha * shot is relevant + (1 - \alpha) * evidence is correct $$
-
-
-\subsection{LeaderBoard}
-
-As the dev set is out of domain, we propose to participants to submit their system for a second deadline one week later. Meanwhile, they have access to the MAP, compute on a secret subset of the test set, of their system performance. 
+For each query $q \in \queries \subset \refNames$ (\texttt{firstname\_lastname}), the hypothesized person name $n_q$ with the highest Levenshtein ratio $\rho$ to the query $q$ is selected ($\ratio : \refNames \times \hypNames \mapsto [0, 1]$) -- allowing approximate name transcription:
+\begin{align}
+\displaystyle n_q & =\argmax_{n \in \hypNames} \rho\left(q, n \right) \\
+\intertext{Average precision $\text{AP}(q)$ is then computed classically~\cite{REF} based on relevant and returned shots:}
+\text{relevant}(q) & = \{ s \in \shots \;|\; q \in \refLabels(s) \} \\
+\text{returned}(q) & = {\{ s \in \shots \;|\; n_q \in \hypLabels(s) \}}_{\begin{subarray}{l}\text{sorted by}\\
+    \text{confidence}\end{subarray}} \\
+\intertext{Evidence correctness $C(q)$ equals the Levenshtein ratio if the hypothesized evidence actually is an evidence for query $q$:}
+             C(q) & =
+                        \begin{cases}
+                            \rho \left(q, n_q \right) & \text{if } n_q \in \refEvidences(\hypEvidences(n_q)) \\
+                            0                         & \text{otherwise}
+                        \end{cases} \\
+\intertext{To ensure participants do provide correct evidences for every hypothesized name $n \in \hypNames$, standard MAP (Mean Average Precision) is altered into EwMAP (Evidence-weighted Mean Average Precision), the official metric for the task:}
+            \text{EwMAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} C(q) \cdot \text{AP}(q)
+\end{align}
 
 \section{Acknowledgments}
 
 INA \\
-ELDA \\
-CAMOMILE \\
-
+ELDA  <--- on les a (beaucoup) payé, quand même !!! donc bon... \\
+CAMOMILE  <---- \\
 
 \newpage
 
