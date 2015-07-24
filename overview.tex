@@ -195,8 +195,7 @@ Speech turns (resp. face tracks) are then compared and clustered based on MFCC a
 \section{Evaluation metric}
 \label{sec:metric}
 
-Baratin autour du use case "information retrieval" pour justifier qu'on evalue
-avec une variante de la MAP.
+As the task aims an information retrieval use case, we used a variation of the classical Mean Average Precision (MAP) that integrate the correctness evaluation of evidences.
 
 For each query $q \in \queries \subset \refNames$ (\texttt{firstname\_lastname}), the hypothesized person name $n_q$ with the highest Levenshtein ratio $\rho$ to the query $q$ is selected ($\ratio : \refNames \times \hypNames \mapsto [0, 1]$) -- allowing approximate name transcription:
 \begin{align}
