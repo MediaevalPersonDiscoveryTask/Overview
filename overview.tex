@@ -169,6 +169,7 @@ Because person names are detected and transcribed automatically, they may contai
 \begin{figure}[!htb]
  \centering
  \includegraphics[width=1.\linewidth]{figs/evidence.pdf}
+ \vspace{-0.5cm}
  \caption{For each shot, participants must return the names of every speaking face. Each name must be backed up by an evidence.}
  \label{fig:evidence}
 \end{figure}
@@ -191,10 +192,10 @@ This task targets researchers from several communities including multimedia, com
 For instance, a researcher from the speech processing community could focus its research efforts on improving speaker diarization and automatic speech transcription, while still being able to rely on provided face detection and tracking results to participate to the task.
 
 \begin{figure}[htb]
- \center
- \includegraphics[width=1\linewidth]{figs/baseline.png}
  \centering
- \caption {Multimodal baseline pipeline. Output of greyed out modules is provided to the participants.}
+ \includegraphics[width=1\linewidth]{figs/baseline.pdf}
+ \vspace{-0.6cm}
+ \caption{Multimodal baseline pipeline. Output of greyed out modules is provided to the participants.}
  \label{fig:baseline}
 \end{figure}
 
@@ -207,19 +208,19 @@ Speech turns (resp. face tracks) are then compared and clustered based on MFCC a
 This information retrieval task is evaluated using a variant of Mean Average Precision (MAP), that takes the quality of evidences into account.
 For each query $q \in \queries \subset \refNames$ (\texttt{firstname\_lastname}), the hypothesized person name $n_q$ with the highest Levenshtein ratio $\rho$ to the query $q$ is selected ($\ratio : \refNames \times \hypNames \mapsto [0, 1]$) -- allowing approximate name transcription:
 \begin{align}
-\displaystyle n_q & =\argmax_{n \in \hypNames} \rho\left(q, n \right) \\
+\displaystyle n_q & =\argmax_{n \in \hypNames} \rho\left(q, n \right) \nonumber \\
 \intertext{Average precision $\text{AP}(q)$ is then computed classically based on relevant and returned shots:}
-\text{relevant}(q) & = \{ s \in \shots \;|\; q \in \refLabels(s) \} \\
+\text{relevant}(q) & = \{ s \in \shots \;|\; q \in \refLabels(s) \} \nonumber \\
 \text{returned}(q) & = {\{ s \in \shots \;|\; n_q \in \hypLabels(s) \}}_{\begin{subarray}{l}\text{sorted by}\\
-    \text{confidence}\end{subarray}} \\
+    \text{confidence}\end{subarray}} \nonumber \\
 \intertext{Evidence correctness $C(q)$ equals the Levenshtein ratio if the hypothesized evidence actually is an evidence for query $q$:}
              C(q) & =
                         \begin{cases}
                             \rho \left(q, n_q \right) & \text{if } n_q \in \refEvidences(\hypEvidences(n_q)) \\
                             0                         & \text{otherwise}
-                        \end{cases} \\
+                        \end{cases} \nonumber \\
 \intertext{To ensure participants do provide correct evidences for every hypothesized name $n \in \hypNames$, standard MAP is altered into EwMAP (Evidence-weighted Mean Average Precision), the official metric for the task:}
-            \text{EwMAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} C(q) \cdot \text{AP}(q)
+            \text{EwMAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} C(q) \cdot \text{AP}(q) \nonumber
 \end{align}
 
 \noindent\textbf{Acknowledgment.} This work was supported by the French National Agency for Research under grant ANR-12-CHRI-0006-01.
