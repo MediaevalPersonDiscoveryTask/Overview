@@ -206,7 +206,7 @@ For instance, a researcher from the speech processing community can focus its re
 
 \subsection{Video processing}
 
-Face tracking-by-detection is applied within each shot using a detector based on histogram of oriented gradients~\cite{Dalal2005} and the correlation tracker proposed by \emph{Danelljan et al.}~\cite{Danelljan2014}. Each face track is then described by its average \emph{FaceNet} embedding and compared with all the others using Euclidean distance~\cite{Schroff2015}. Finally, average-link hierarchical agglomerative clustering is applied. Source code for this module is available in \emph{pyannote-video}~\cite{pyannote-video}. Optical character recognition followed by name detection is contributed by IDIAP~\cite{Chen2005} and UPC.
+Face tracking-by-detection is applied within each shot using a detector based on histogram of oriented gradients~\cite{Dalal2005} and the correlation tracker proposed by \emph{Danelljan et al.}~\cite{Danelljan2014}. Each face track is then described by its average \emph{FaceNet} embedding and compared with all the others using Euclidean distance~\cite{Schroff2015}. Finally, average-link hierarchical agglomerative clustering is applied. Source code for this module is available in \emph{pyannote-video}~\cite{pyannote-video}. Optical character recognition followed by name detection is contributed by IDIAP~\cite{Chen2005} and UPC. UPC detection was performed using LOOV~\cite{POIGNANT--ICME--2012}. Then, text results were filtered using first and last names gathered from internet and an hand-crafted list of negative words. Sentences where the first word appeared in the list of negative words (e.g., street, square, etc.) were discarded.
 
 \subsection{Audio processing}
 
@@ -218,7 +218,7 @@ Pronounced person names are automatically extracted from the audio stream using 
 Three variants of the name propagation technique proposed in~\cite{POIGNANT--INTERSPEECH--2012} are proposed.
 Baseline~1 tags each speaker cluster by the most co-occurring written name.
 Baseline~2 tags each face cluster by the most co-occurring written name.
-Baseline~3 is the temporal intersection of baselines 1 and 2.
+Baseline~3 is the temporal intersection of both. %baselines 1 and 2.
 These fusion techniques are available as open-source software\footnote{\url{http://github.com/MediaEvalPersonDiscoveryTask}}.
 
 
