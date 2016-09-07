@@ -152,7 +152,7 @@ TV archives maintained by national institutions such as the French INA, the Neth
 
 Indexes that represent the location and identity of people in the archive are indispensable for searching archives. Human nature leads people to be very interested in other people. However, when the content is created or broadcasted, it is not always possible to predict which people will be the most important to find in the future
 and biometric models may not yet be available at indexing time
-The goal of this task is thus to address the challenge of indexing people in the archive under real-world conditions, \emph{i.e.}, when there is no pre-set list of people to index.
+The goal of this task is thus to address the challenge of indexing people in the archive under real-world conditions, \emph{i.e.} when there is no pre-set list of people to index.
 
 %Early approaches relying on pronounced names instead of biometric models for speaker identification~\cite{CANSECO--ASRU--2005, CANSECO--INTERSPEECH--2004, ESTEVE--INTERSPEECH--2007, JOUSSE--ICCASP--2009, MAUCLAIR--Odyssey--2006, TRANTER--ICASSP--2006} were hampered by relatively high speech transcription errors or and named entity detection errors. Similarly, initial visual-only approaches based on overlaid title box transcriptions for face recognition were very dependent on the quality of overlaid name transcription~\cite{HOUGHTON--IS--1999, SATOH--IEEEMM--1999, YANG--ACMMM--2004, YANG--ACMMM--2005}.
 Started in 2011, the REPERE challenge aimed at supporting research on multimodal person recognition~\cite{BERNARD--SLAM--2013, KAHN--CBMI--2012}. Its main goal was to answer the two questions \emph{``who speaks when?''} and \emph{``who appears when?''} using any available source of information (including pre-existing biometric models and person names extracted from text overlay and speech transcripts). Thanks to this challenge and the associated multimodal corpus~\cite{GIRAUDEL--LREC--2012}, significant progress was achieved in either supervised or unsupervised multimodal person recognition~\cite{BECHET--INTERSPEECH--2014, BENDRIS--CBMI--2013, BREDIN--ODYSSEY--2014, BREDIN--INTERSPEECH--2013, BREDIN--SLAM--2013, BREDIN--IJMIR--2014, FAVRE--SLAM--2013, GAY--CBMI--2014, POIGNANT--ASLP--2015, POIGNANT--SLAM--2013, POIGNANT--INTERSPEECH--2012, POIGNANT--MTAP--2015, ROUVIER--CBMI--2014}.
@@ -162,9 +162,9 @@ After the end of the REPERE challenge in 2014, the  first edition of the ``Multi
 \section{Definition of the task}
 
 Participants are provided with a collection of TV broadcast recordings pre-segmented into shots.
-Each shot $s \in \shots$ has to be automatically tagged with the names of people both speaking and appearing at the same time during the shot: this tagging algorithm is denoted by $\hypLabels : \shots \mapsto \mathcal{P}(\hypNames)$ in the rest of the paper.
+Each shot $s \in \shots$ has to be automatically tagged with the names of people both speaking and appearing at the same time during the shot.
 
-As last year, the list of persons is not provided \emph{a priori}, and person biometric models (neither voice nor face) can not be trained on external data in the primary runs. The only way to identify a person is by finding their name $n \in \hypNames$ in the audio (\emph{e.g.} using speech transcription -- ASR) or visual (\emph{e.g.} using optical character recognition -- OCR) streams and associating them to the correct person. This makes the task completely unsupervised (\emph{i.e.} using algorithms not relying on pre-existing labels or biometric models). The main novelty of this year task is that participants may use their contrastive run to try brave new ideas that may rely on any external data, including textual metadata provided with the test set.
+As last year, the list of persons is not provided \emph{a priori}, and person biometric models (neither voice nor face) can not be trained on external data in the primary runs. The only way to identify a person is by finding their name $n \in \hypNames$ in the audio (\emph{e.g.}, using speech transcription -- ASR) or visual (\emph{e.g.}, using optical character recognition -- OCR) streams and associating them to the correct person. This makes the task completely unsupervised (\emph{i.e.} using algorithms not relying on pre-existing labels or biometric models). The main novelty of this year task is that participants may use their contrastive run to try brave new ideas that may rely on any external data, including textual metadata provided with the test set.
 
 Because person names are detected and transcribed automatically, they may contain transcription errors to a certain extent (more on that later in Section~\ref{sec:metric}). In the following, we denote by $\refNames$ the set of all possible person names in the universe, correctly formatted as \texttt{firstname\_lastname} -- while $\hypNames$ is the set of hypothesized names.
 
@@ -176,10 +176,10 @@ Because person names are detected and transcribed automatically, they may contai
  \label{fig:evidence}
 \end{figure}
 
-
 \section{Datasets}
 
-The 2015 test corpus serves as development set for this year's task. It contains 106 hours of video, corresponding to 172 editions of evening broadcast news \emph{``Le 20 heures''} of French public channel \emph{``France 2''}, from January 1st 2007 to June 30st 2007. This development set is associated with \emph{a posteriori} annotations based on last year participants' submissions.
+
+The 2015 test corpus serves as development set for this year's task. It contains 106 hours of video, corresponding to 172 editions of evening broadcast news \emph{``Le 20 heures''} of the French public channel \emph{``France 2''}, from January 1st 2007 to June 30st 2007. This development set is associated with \emph{a posteriori} annotations based on last year participants' submissions.
 
 The test set is divided into three datasets: INA, DW and 3-24. The INA dataset contains a full week of broadcast for 3 TV channels and 3 radio channels in French. Only a subset (made of 2 TV video channels for a total duration of 90 hours) needs to be processed. However, participants can process the rest of it if they think it might lead to improved results. Moreover, this dataset is associated with manual metadata provided by INA in the shape of CSV files. The DW dataset~\cite{EUMSSI} is composed of video downloaded from Deutsche Welle website, in English and German for a total duration of 50 hours. This dataset is also associated with metadata that can be used in contrastive runs. The last dataset contains 13 hours of broadcast from 3/24 Catalan TV news channel.
 
@@ -189,10 +189,9 @@ In order to ease this annotation process, participants are asked to justify thei
 Two types of evidence are allowed: an \emph{image} evidence is a time in a video when a person is visible, while his/her name is written on screen; an \emph{audio} evidence is the time when the name of a person is pronounced, provided that this person is visible in a $[\text{time} - 5s, \text{time} + 5s ]$ neighborhood.
 For instance, in Figure~\ref{fig:evidence}, shot \#1 contains an \emph{image} evidence for Mr A (because his name and his face are visible simultaneously on screen) while shot \#3 contains an \emph{audio} evidence for Mrs B (because her name is pronounced less than 5 seconds before or after her face is visible on screen).
 
-
 \section{Baseline and metadata}
 
-This task target researchers from several communities including multimedia, computer vision, speech and natural language processing. Though the task is multimodal by design and necessitates expertise in various domains, the technological barriers to entry is lowered by the provision of a baseline system available partially as open-source software.
+This task targets researchers from several communities including multimedia, computer vision, speech and natural language processing. Though the task is multimodal by design and necessitates expertise in various domains, the technological barriers to entry is lowered by the provision of a baseline system available partially as open-source software.
 
 For instance, a researcher from the speech processing community can focus its research efforts on improving speaker diarization and automatic speech transcription, while still being able to rely on provided face detection and tracking results to participate to the task. Figure~\ref{fig:baseline} summarizes the available modules.
 
@@ -206,12 +205,14 @@ For instance, a researcher from the speech processing community can focus its re
 
 \subsection{Video processing}
 
-Face tracking-by-detection is applied within each shot using a detector based on histogram of oriented gradients~\cite{Dalal2005} and the correlation tracker proposed by \emph{Danelljan et al.}~\cite{Danelljan2014}. Each face track is then described by its average \emph{FaceNet} embedding and compared with all the others using Euclidean distance~\cite{Schroff2015}. Finally, average-link hierarchical agglomerative clustering is applied. Source code for this module is available in \emph{pyannote-video}~\cite{pyannote-video}. Optical character recognition followed by name detection is contributed by IDIAP~\cite{Chen2005} and UPC. UPC detection was performed using LOOV~\cite{POIGNANT--ICME--2012}. Then, text results were filtered using first and last names gathered from internet and an hand-crafted list of negative words. Sentences where the first word appeared in the list of negative words (e.g., street, square, etc.) were discarded.
+Face tracking-by-detection is applied within each shot using a detector based on histogram of oriented gradients~\cite{Dalal2005} and the correlation tracker proposed by \emph{Danelljan et al.}~\cite{Danelljan2014}. Each face track is then described by its average \emph{FaceNet} embedding and compared with all the others using Euclidean distance~\cite{Schroff2015}. Finally, average-link hierarchical agglomerative clustering is applied. Source code for this module is available in \emph{pyannote-video}\footnote{\url{http://pyannote.github.io}}.
+
+Optical character recognition followed by name detection is contributed by IDIAP~\cite{Chen2005} and UPC. UPC detection was performed using LOOV~\cite{POIGNANT--ICME--2012}. Then, text results were filtered using first and last names gathered from internet and an hand-crafted list of negative words. Due to the large diversity of the test corpus, optical character recognition results are much more noisy than the ones provided in 2015.
 
 \subsection{Audio processing}
 
 Speaker diarization and speech transcription for French, German and English are contributed by LIUM~\cite{ROUVIER--INTERSPEECH--2013, GUPTA--ASRU--2015}.
-Pronounced person names are automatically extracted from the audio stream using a large list of names gathered from Wikipedia.
+Pronounced person names are automatically extracted from the audio stream using a large list of names gathered from the Wikipedia website.
 
 \subsection{Multimodal fusion baseline}
 
@@ -225,7 +226,8 @@ These fusion techniques are available as open-source software\footnote{\url{http
 \section{Evaluation metric}
 \label{sec:metric}
 
-This information retrieval task is evaluated using Mean Average Precision (MAP).
+Because of limited resources dedicated to collaborative annotation, the test set cannot be fully annotated. Therefore, the task is evaluated indirectly as an information retrieval task, using the folllowing principle.
+
 For each query $q \in \queries \subset \refNames$ (\texttt{first\-name\_lastname}), returned shots are first sorted by the edit distance between the hypothesized person name and the query $q$ and then by confidence scores.
 Average precision $\text{AP}(q)$ is then computed classically based on the list of relevant shots (according to the groundtruth) and the sorted list of shots. Finally, Mean Average Precision is computed as follows:
 \begin{align}
@@ -235,11 +237,10 @@ Average precision $\text{AP}(q)$ is then computed classically based on the list 
 \section*{Acknowledgment}
 
 This work was supported by the French National Agency for Research under grants ANR-12-CHRI-0006-01 and ANR-14-CE24-0024. The open source CAMO\-MILE collaborative annotation platform\footnote{\url{http://github.com/camomile-project}} was used extensively throughout the progress of the task: from the run submission script to the automated leaderboard, including \emph{a posteriori} collaborative annotation of the test corpus.
-
 The task builds on Johann Poignant involvement in 2015 task organization.
 Xavier Trimolet helped design and develop the 2016 annotation interface.
-
-We also thank INA for supporting the task by distributing development and test datasets, Sylvain Meignier and Yannick Est\`eve from LIUM for providing the ASR and diarization of most corpora, Ramon Morros and Javier Hernando from UPC for contributing the 3/24 TV corpus along with its transcription and OCR, Nam Le and Jean-Marc Odobez from IDIAP for contributing the DW corpus gathered during the EUMSSI project and for the OCR.
+We also thank INA, LIUM, UPC and IDIAP for providing datasets and baseline modules.
+%We also thank INA for supporting the task by distributing development and test datasets, Sylvain Meignier and Yannick Est\`eve from LIUM for providing the ASR and diarization of most corpora, Ramon Morros and Javier Hernando from UPC for contributing the 3/24 TV corpus along with its transcription and OCR, Nam Le and Jean-Marc Odobez from IDIAP for contributing the DW corpus gathered during the EUMSSI project and for the OCR.
 
 \newpage
 
